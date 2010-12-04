@@ -60,7 +60,7 @@ EOF
 echo "DEVICE=${DEVICE_NAME}" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 
-echo "mkdir -p ../../../vendor/samsung/\$DEVICE/proprietary" >> ${OUTPUT_FILE}
+echo "mkdir -p ../../../vendor/${DEVICE_VENDOR}/\$DEVICE/proprietary" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 
 echo "DIRS=\"" >> ${OUTPUT_FILE}
@@ -73,7 +73,7 @@ echo "\"" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 
 echo "for DIR in \$DIRS; do" >> ${OUTPUT_FILE}
-printf "\tmkdir -p ../../../vendor/samsung/\$DEVICE/proprietary/\$DIR\n" >> ${OUTPUT_FILE}
+printf "\tmkdir -p ../../../vendor/${DEVICE_VENDOR}/\$DEVICE/proprietary/\$DIR\n" >> ${OUTPUT_FILE}
 echo "done" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 
@@ -90,17 +90,17 @@ echo "for FILE in \$FILES; do" >> ${OUTPUT_FILE}
 printf "\t adb pull \$FILE ../../../vendor/${DEVICE_VENDOR}/\$DEVICE/proprietary/\$FILE\n" >> ${OUTPUT_FILE}
 echo "done" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
-echo "(cat << EOF) | sed s/__DEVICE__/\$DEVICE/g > ../../../vendor/samsung/\$DEVICE/\$DEVICE-vendor-blobs.mk" >> ${OUTPUT_FILE}
+echo "(cat << EOF) | sed s/__DEVICE__/\$DEVICE/g > ../../../vendor/${DEVICE_VENDOR}/\$DEVICE/\$DEVICE-vendor-blobs.mk" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 echo "PRODUCT_COPY_FILES := \\\\" >> ${OUTPUT_FILE}
-echo "    vendor/samsung/__DEVICE__/proprietary/lib/libgps.so:obj/lib/libgps.so \\\\" >> ${OUTPUT_FILE}
-echo "    vendor/samsung/__DEVICE__/proprietary/lib/libsecgps.so:obj/lib/libsecgps.so \\\\" >> ${OUTPUT_FILE}
-echo "    vendor/samsung/__DEVICE__/proprietary/lib/libsecril-client.so:obj/lib/libsecril-client.so" >> ${OUTPUT_FILE}
+echo "    vendor/${DEVICE_VENDOR}/__DEVICE__/proprietary/lib/libgps.so:obj/lib/libgps.so \\\\" >> ${OUTPUT_FILE}
+echo "    vendor/${DEVICE_VENDOR}/__DEVICE__/proprietary/lib/libsecgps.so:obj/lib/libsecgps.so \\\\" >> ${OUTPUT_FILE}
+echo "    vendor/${DEVICE_VENDOR}/__DEVICE__/proprietary/lib/libsecril-client.so:obj/lib/libsecril-client.so" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
 
 echo "PRODUCT_COPY_FILES += \\\\" >> ${OUTPUT_FILE}
 while read LINE; do
-	echo "    vendor/samsung/__DEVICE__/proprietary/$LINE:system/$LINE \\\\" >> ${OUTPUT_FILE}
+	echo "    vendor/${DEVICE_VENDOR}/__DEVICE__/proprietary/$LINE:system/$LINE \\\\" >> ${OUTPUT_FILE}
 done < ${FILES}
 echo "EOF" >> ${OUTPUT_FILE}
 echo >> ${OUTPUT_FILE}
