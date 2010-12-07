@@ -15,8 +15,9 @@ my @output;
 my %options = ("factoryfs", "$root/factoryfs.rfs",
 		"cache", "$root/cache.rfs",
 		"dbdata", "$root/dbdata.rfs",
-		"boot", "$root/boot.bin",
-		"param", "$root/param.lfs",
+		#"boot", "$root/boot.bin",
+		#"secondary", $root/sbl.bin",
+		#"param", "$root/param.lfs",
 		"kernel", "$root/zImage-ji6-2e",
 		"modem", "$root/modem.bin"); 
 
@@ -54,7 +55,9 @@ if ($error_flag > 0) {
 	print "$error_text One or more files could not be found.\n";
 	exit 254;
 } else {
-	$command = "heimdall flash --factoryfs $options{factoryfs} --cache $options{cache} --dbdata $options{dbdata} --boot $options{boot} --param $options{param} --kernel $options{kernel} --modem $options{modem}";
+	# I won't touch boot.bin, sbl.bin, or param.lfs now. Dangerous.
+	#$command = "$heimdall flash --factoryfs $options{factoryfs} --cache $options{cache} --dbdata $options{dbdata} --boot $options{boot} --secondary $options{secondary} --param $options{param} --kernel $options{kernel} --modem $options{modem}";
+	$command = "$heimdall flash --factoryfs $options{factoryfs} --cache $options{cache} --dbdata $options{dbdata} --kernel $options{kernel} --modem $options{modem}";
 }
 
 # Start the adb server if necessary
